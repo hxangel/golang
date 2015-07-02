@@ -1,16 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"os/exec"
+	"github.com/hxangel/golang/grap"
 )
-
+var idx_url = "http://www.keenthemes.com/preview/metronic/theme/templates/admin/index.html";
 func main() {
-	path, err := exec.LookPath("echo")
-	if err != nil {
-		fmt.Printf("Error: %s\n", err)
-		return
-	}
-	//测试环境为ArchLinux
-	fmt.Printf("echo is available at %s\n", path)    //echo is available at /usr/bin/echo
+	grap.Grap(idx_url);
 }

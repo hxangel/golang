@@ -145,15 +145,15 @@ func SaveFile(url, pathstr string) error {
 	abs := fmt.Sprintf(`%s/%s`, file, pathstr)
 	fmt.Println(abs)
 	_, err := exec.LookPath(abs)
-//
-//	ext := path.Ext(pathstr)
-//	mp := make(map[string]string)
-//	mp[".jpg"] = "jpg"
-//	mp[".png"] = "png"
-//	mp[".jif"] = "jif"
-//	if _, ok := mp[ext]; ok {
-//		fmt.Println(abs)
-//	}
+	//
+	//	ext := path.Ext(pathstr)
+	//	mp := make(map[string]string)
+	//	mp[".jpg"] = "jpg"
+	//	mp[".png"] = "png"
+	//	mp[".jif"] = "jif"
+	//	if _, ok := mp[ext]; ok {
+	//		fmt.Println(abs)
+	//	}
 	if err != nil {
 		fmt.Println(abs)
 		resp, err := http.Get(url)
@@ -170,8 +170,8 @@ func SaveFile(url, pathstr string) error {
 		if err != nil {
 			return err
 		}
-//		msg := fmt.Sprintf("%s is unavailable \n", abs)
-//		fmt.Print(len(msg))
+		//		msg := fmt.Sprintf("%s is unavailable \n", abs)
+		//		fmt.Print(len(msg))
 		pathstr = path.Dir(abs)
 		//		fmt.Printf("creating %s \n", f)
 		os.MkdirAll(pathstr, 0777)

@@ -1,4 +1,4 @@
-package main
+package golang
 
 import (
 	"fmt"
@@ -65,16 +65,6 @@ func scanDir(w http.ResponseWriter, d string) {
 	db.Close()
 }
 
-func checkError(err error) {
-	if err != nil {
-		fmt.Println(err)
-		//修改os.Exit(1)为return，因为会导致程序退出->退出返回值为1
-		fmt.Println(time.Now().String() + "checkError函数检查出错误")
-		msg = "检查错误"
-		ErrorLine(msg)
-		return
-	}
-}
 
 func queryByPath(w http.ResponseWriter, db mysql.Conn, pt string) {
 	rows, res := checkedResult(db.Query("select full_result from risks_check_history where apk='%s' ORDER BY id DESC Limit 1", pt))
@@ -133,20 +123,6 @@ func handlerScan(w http.ResponseWriter, r *http.Request) {
 	RightLine()
 	scanDir(w, orgi_dir)
 
-}
-
-func ErrorLine(msg string ) {
-	_, file, line, ok := runtime.Caller(1)
-	if ok {
-		fmt.Println(time.Now().String() + file + "第" + strconv.Itoa(line) + "行: "+msg )
-	}
-}
-
-func RightLine() {
-	_, file, line, ok := runtime.Caller(1)
-	if ok {
-		fmt.Println(time.Now().String() + file + "第" + strconv.Itoa(line) + "行"+"正常")
-	}
 }
 
 func main() {
