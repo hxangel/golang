@@ -1,4 +1,4 @@
-package golang
+package main
 
 import (
 	"os"
@@ -14,10 +14,10 @@ func main() {
 	//	fmt.Println(os.Args[0])
 	//	file, _ = exec.LookPath(os.Args[0])
 	abs := fmt.Sprintf(`%s/metronic/templates/admin/extra_profile.html`, file)
-	fmt.Println(abs)
+//	fmt.Println(abs)
 	file, _ = exec.LookPath(fmt.Sprintf(`%smetronic/templates/admin/extra_profile.html`, file))
-	fmt.Printf("%T", os.Args[0])
-	fmt.Println(file)
+//	fmt.Printf("%T", os.Args[0])
+//	fmt.Println(file)
 	log.Println("exec path:", file)
 	filename := path.Dir(abs)
 	os.MkdirAll(filename, 0777)
@@ -27,4 +27,12 @@ func main() {
 	os.Chdir(dir)
 	wd, _ := os.Getwd()
 	log.Println("exec folder absolute path:", wd)
+
+	fmt.Println("\n");
+	m := map[string]map[string]string{}
+	m["dasdfsdf"]["dfsadfasf"]="sdfdsfsfsfddsfww";
+	if m["dasdfsssdf"]=="" {
+		fmt.Println(m["dasdfsdf"])
+	}
+
 }

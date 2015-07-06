@@ -36,10 +36,26 @@ type myRegexp struct {
 	*regexp.Regexp
 }
 
-var baseurl = "http://www.keenthemes.com/preview/metronic/"
+var baseurl = "http://www.keenthemes.com/preview/metronic/theme/"
 var msg string
 var num int
+func main() {
+	file, _ := os.Getwd()
+	abs := fmt.Sprintf(`%s/55958.log`, file)
+	re := regexp.MustCompile(`(?U)jesy.com/(.*\.\w+)\s`)
+	body, err := ioutil.ReadFile(abs)
+	if err != nil {
+		fmt.Println(err);
+	}
+	fmt.Println(string(body))
+	files := re.FindAllStringSubmatch(fmt.Sprintf("%s", body), -1)
+	fmt.Println(len(files))
+	for i, _:= range files {
+		fmt.Println(baseurl+files[i][1])
+		SaveFile(baseurl+files[i][1], files[i][1])
+	}
 
+}
 func NewHtmlParse() *HtmlParse {
 	return &HtmlParse{
 		replaces: [][]string{
@@ -141,7 +157,7 @@ func getFileSaveName(u string) {
 
 func SaveFile(url, pathstr string) error {
 	num +=1
-	file := "/www/htdocs/metronic"
+	file := "/www/htdocs/temp"
 	abs := fmt.Sprintf(`%s/%s`, file, pathstr)
 	fmt.Println(abs)
 	_, err := exec.LookPath(abs)
@@ -238,20 +254,7 @@ func getBackGround(css string, img [][]string) {
 		SaveFile(url, "metronic/"+uri)
 	}
 }
-func main() {
-	file, _ := os.Getwd()
-	abs := fmt.Sprintf(`%s/xx.html`, file)
-	re := regexp.MustCompile(`milo.com/(.*)\s404`)
-	body, err := ioutil.ReadFile(abs)
-	if err != nil {
 
-	}
-	files := re.FindAllStringSubmatch(fmt.Sprintf("%s", body), -1)
-	for i, _:= range files {
-		SaveFile(baseurl+files[i][1], files[i][1])
-	}
-
-}
 
 func grap(filestr string, hp *HtmlParse) {
 	url := baseurl + "templates/admin/" + filestr
