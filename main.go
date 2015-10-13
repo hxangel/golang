@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/hxangel/golang/grap"
+	grap "github.com/hxangel/golang/grap"
 )
 var idx_url = "http://www.keenthemes.com/preview/metronic/theme/templates/admin/index.html";
 func main() {
