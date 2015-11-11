@@ -3,10 +3,10 @@ import "fmt"
 import "math"
 //const declares a constant value.
 //常量声明与赋值
-const strings string = "constant"
+const stringx string = "constant"
 //常量操作
 func main() {
-	fmt.Println(strings)
+	fmt.Println(stringx)
 	//A const statement can appear anywhere a var statement can.
 	//常量可以任何任何声明变量的地方声明
 	const n = 500000000

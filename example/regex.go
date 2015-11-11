@@ -6,10 +6,10 @@ import "regexp"
 func main() {
 
 
-	regex, _ := regexp.Compile(`(\d+).html`)
+	regex, _ := regexp.Compile(`(?U)(\d+).html`)
 	id := regex.FindStringSubmatch("http://m.jd.com/product/1510479.html?v=t&")
 //	fmt.Println(mUrl)
-	fmt.Println(id[1])
+	fmt.Println(id)
 	//		http://m.jd.com/product/1143562.html
 	//这个测试一个字符串是否符合一个表达式。
 	match, _ := regexp.MatchString("p([a-z]+)ch", "peach")
