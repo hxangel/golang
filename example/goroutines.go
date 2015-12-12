@@ -1,40 +1,34 @@
-//A goroutine is a lightweight thread of execution.
+// _Go 协程_ 在执行上来说是轻量级的线程。
+
 package main
+
 import "fmt"
+
 func f(from string) {
-	for i := 1; i <= 100; i++ {
-		if i%10==0{
-			fmt.Println();
-		}
-		fmt.Print(from, ":", i)
+	for i := 0; i < 3; i++ {
+		fmt.Println(from, ":", i)
 	}
 }
+
 func main() {
-	//Suppose we have a function call f(s). Here’s how we’d call that in the usual way, running it synchronously.
-	f("d")
-	//To invoke this function in a goroutine, use go f(s). This new goroutine will execute concurrently with the calling one.
-	go f("e")
-	//You can also start a goroutine for an anonymous function call.
+
+	// 假设我们有一个函数叫做 `f(s)`。我们使用一般的方式
+	// 调并同时运行。
+	f("direct")
+
+	// 使用 `go f(s)` 在一个 Go 协程中调用这个函数。
+	// 这个新的 Go 协程将会并行的执行这个函数调用。
+	go f("goroutine")
+
+	// 你也可以为匿名函数启动一个 Go 协程。
 	go func(msg string) {
 		fmt.Println(msg)
 	}("going")
-	//Our two function calls are running asynchronously in separate goroutines now, so execution falls through to here. This Scanln code requires we press a key before the program exits.
+
+	// 现在这两个 Go 协程在独立的 Go 协程中异步的运行，所以
+	// 我们需要等它们执行结束。这里的 `Scanln` 代码需要我们
+	// 在程序退出前按下任意键结束。
 	var input string
 	fmt.Scanln(&input)
 	fmt.Println("done")
 }
-//When we run this program, we see the output of the blocking call first, then the interleaved output of the two gouroutines. This interleaving reflects the goroutines being run concurrently by the Go runtime.
-/*
-$ go run goroutines.go
-direct : 0
-direct : 1
-direct : 2
-goroutine : 0
-going
-goroutine : 1
-goroutine : 2
-<enter>
-done
-*/
-//Next we’ll look at a complement to goroutines in concurrent Go programs: channels.
-//Next example: Channels.

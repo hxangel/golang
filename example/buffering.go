@@ -1,19 +1,24 @@
-//By default channels are unbuffered, meaning that they will only accept sends (chan <-) if there is a corresponding receive (<- chan) ready to receive the sent value. Buffered channels accept a limited number of values without a corresponding receiver for those values.
 package main
-import "fmt"
+import (
+	"fmt"
+)
 func main() {
-	//Here we make a channel of strings buffering up to 2 values.
-	messages := make(chan string, 2)
-	//Because this channel is buffered, we can send these values into the channel without a corresponding concurrent receive.
-	messages <- "buffered"
-	messages <- "channel"
-	//Later we can receive these two values as usual.
-	fmt.Println(<-messages)
-	fmt.Println(<-messages)
+	ch := make(chan int)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			ch <- i
+		}
+	}()
+
+
+	for w := range ch {
+		fmt.Println("fmt print", w)
+		if w > 5 {
+			//break // 在这里break循环也可以
+			close(ch)
+		}
+	}
+	fmt.Println("after range or close ch!")
 }
-/*
-$ go run channel-buffering.go
-buffered
-channel
-*/
-//Next example: Channel Synchronization.
+
