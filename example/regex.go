@@ -6,9 +6,36 @@ import "regexp"
 func main() {
 
 
-	regex, _ := regexp.Compile(`(?U)"nid":"`+"41320203712"+`","category":"\d+","pid":"-(\d+)"`)
-	id := regex.FindStringSubmatch(`"nid":"41320203712","category":"50013194","pid":"-417816708","title"`)
-	fmt.Println(id)
+	regex, _ := regexp.Compile(`(?Us)pageConfig = ({.*});`)
+	id := regex.FindStringSubmatch(` var pageConfig = {
+            compatible: true,
+            product: {
+                skuid: 1500970,
+                name: '\u7f8e\u7684\uff08\u004d\u0069\u0064\u0065\u0061\uff09\u5927\u0031\u5339\u0020\u667a\u80fd\u4e91\u9664\u7532\u919b\u51b7\u6696\u53d8\u9891\u6302\u673a\uff08\u4eac\u4e1c\u68a6\u60f3\u5347\u7ea7\u7248\uff09\u0020\u624b\u673a\u0041\u0050\u0050\u63a7\u5236\u0020\u004b\u0046\u0052\u002d\u0032\u0036\u0047\u0057\u002f\u0057\u004a\u0043\u0041\u0033\u0040',
+                skuidkey:'80B90C7CB0B9D7ED857635D110B48B80',
+                href: '//item.jd.com/1500970.html',
+                src: 'jfs/t1939/321/392123766/74291/73a0d9d5/5603db1dN309ca724.jpg',
+                cat: [737,794,870],
+                brand: 12380,
+                pType: 1,
+                isClosePCShow: false,
+                venderId:1000001452,
+                shopId:'1000001452',
+                                commentVersion:'3461',                 specialAttrs:["isFlashPurchase-0","isCanVAT","isPickingGoods-0","isHaveYB","packType","isFitService","isCanUseDQ-1","isSelfService-0","isCanUseJQ-1","isWeChatStock-0","HYKHSP-0","isNSNGgoods-3","isOverseaPurchase-0","is7ToReturn-1","isOldChangeNewForJD","YYSLLZC-0"],
+                recommend : [0,1,2,3,4,5,6,7,8,9],
+                easyBuyUrl:"http://easybuy.jd.com/skuDetail/newSubmitEasybuyOrder.action",
+                                colorSize: [{"Color":"大1匹","SkuId":1133068,"Size":"纯呼吸 变频【独立送风除甲醛】"},{"Color":"1.5匹","SkuId":1133441,"Size":"纯呼吸 定速【独立送风除甲醛】"},{"Color":"大1匹","SkuId":1298903,"Size":"京东英雄 单冷【强劲制冷】"},{"Color":"小1匹","SkuId":1298893,"Size":"京东英雄 定速【迅猛制冷制热】"},{"Color":"小1匹","SkuId":1298894,"Size":"京东英雄 单冷【强劲制冷】"},{"Color":"小1.5匹","SkuId":1298898,"Size":"京东英雄 定速【迅猛制冷制热】"},{"Color":"1.5匹","SkuId":1298907,"Size":"京东英雄 变频【稀土压缩机】"},{"Color":"1.5匹","SkuId":1338105,"Size":"京东英雄 单冷【强劲制冷】"},{"Color":"小1.5匹","SkuId":1462425,"Size":"京东英雄 变频【稀土压缩机】"},{"Color":"大1匹","SkuId":1500970,"Size":"智能WIFI变频【独立送风除甲醛】"},{"Color":"1.5匹","SkuId":1500981,"Size":"智能WIFI变频【独立送风除甲醛】"}],                warestatus: 1,                                 tips: [{"order":3,"tip":"支持7天无理由退货"}],                isOtc: false,                isBookMvd4Baby: false,                                desc: '//d.3.cn/desc/1500970?cdn=2',                foot: '//d.3.cn/footer?type=common_config2'
+            }
+        };
+                        try {
+                        function is_sort_black_list() {
+              var jump_sort_list = {"6881":3,"1195":3,"10011":3,"6980":3,"12360":3};
+              if(jump_sort_list['737'] == 1 || jump_sort_list['794']==2 || jump_sort_list['870']==3) {
+                return true;
+              }
+              return false;
+            }`)
+	fmt.Println(id[1])
 	return
 	//		http://m.jd.com/product/1143562.html
 	//这个测试一个字符串是否符合一个表达式。

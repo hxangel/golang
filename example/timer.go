@@ -18,6 +18,9 @@ func testTimer2() {
 	}()
 }
 
+func TimerS()  {
+	MyColor("red")
+}
 func timer1() {
 	timer1 := time.NewTicker(1 * time.Second)
 	for {
@@ -51,5 +54,6 @@ func timer(){
 func main() {
 //	go timer1()
 //	timer2()
-	timer()
+//	timer()
+	TimerS()
 }

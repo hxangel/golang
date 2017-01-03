@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strconv"
 	"time"
-	"github.com/rainkid/spider"
+	"github.com/hxangel/spider"
 	"encoding/json"
 )
 

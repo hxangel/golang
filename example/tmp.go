@@ -1,52 +1,137 @@
 package main
 
 import (
-	"strings"
-	"fmt"
-	"strconv"
-	"math/rand"
-//	"time"
 	"time"
+	"fmt"
+	"math/rand"
 )
 
-
+var Checking chan bool
 
 func main() {
-	id := GetExtensionId()
-	fmt.Println(id)
+	rand.Seed(time.Now().UnixNano())
+	skip := rand.Intn(100);
+	fmt.Println(skip);
+	Chenx()
+	return
+	rand.Seed(time.Now().UnixNano())
+	//skip := rand.Intn(10000);
+	fmt.Println(skip);
+	return
+	Check()
+	return
+	t, _ := time.Parse("2006-01-02 15:04:05", "2016-11-30 22:20:07")
+	if t.Add(time.Hour).Before(time.Now()) {
+		fmt.Println(t);
+	}
 }
-func GetExtensionId() string {
-	s4 := func() string {
-		r := rand.New(rand.NewSource(time.Now().UnixNano()))
-		 str := ToHex(r.Intn(rand.Int()), 2)
-		return str[1:5]
+func Chenx() {
+	a := 0
+	for {
+		a++
+
+		if a > 10 {
+
+			break
+		}
+		fmt.Println(a)
 
 	}
-	s := s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4()
-	return s;
 }
-//字符串反转
-func Reverse(s string) string {
-	runes := []rune(s)
-	for i, j := 0, len(runes) - 1; i < j; i, j = i + 1, j - 1 {
-		runes[i], runes[j] = runes[j], runes[i]
+func Chen() {
+	ch := make(chan bool, 2)
+	jobs := make(chan int, 80)
+	//full := make(chan bool)
+	done := 0
+	go func() {
+		for {
+			j, more := <-jobs
+			if more {
+				go func() {
+					//time.Sleep(time.Microsecond*1500)
+					time.Sleep(time.Microsecond * 1000)
+
+					fmt.Println(j)
+					//if j % 10 == 0 {
+					//	fmt.Println(j)
+					//} else {
+					//	//SpiderLoger.I("Check Faild [", j.Host, "]")
+					//}
+					//SpiderLoger.I("Checked [", done, "]")
+					done++
+					// 回收chan
+					<-ch
+				}()
+				ch <- true
+			} else {
+				//time.Sleep(time.Second * 1)
+				fmt.Println("FULL")
+				//满号
+				//full <- true
+			}
+		}
+
+	}()
+
+	for i := 0; i <= 25; i++ {
+		jobs <- i
 	}
-	return string(runes)
+	time.Sleep(time.Second * 10)
+	<-Checking
+
+	//close(jobs)
+
+
 }
-//遍历msg的字符,转换成相应with位16进制,然后连接在一起
-func Encrypt(msg string, with int, reverse bool) string {
-	var ch_arr []string
-	for _, ch := range msg {
-		ch_hex := ToHex((int(ch) + 88), with)
-		ch_arr = append(ch_arr, ch_hex)
+
+func Check() {
+
+	// Query All
+	//mc := ms.Bulk()
+
+	fmt.Println("Start checking proxys")
+
+	ch := make(chan bool, 2)
+	jobs := make(chan int)
+	done := make(chan bool)
+	//var wg sync.WaitGroup
+	//wg.Add(1)
+	go func() {
+		for {
+			j, more := <-jobs
+			if more {
+				go func() {
+					if j % 50 == 0 {
+						fmt.Print("H")
+					}
+					//回收ch
+					<-ch
+				}()
+				//占ch坑
+				ch <- true
+			} else {
+				//for i := 0; i < 10; i++ {
+				//	<-ch
+				//}
+				//time.Sleep(time.Second * 1)
+				fmt.Println("End checking proxys count[", "HHHHH", "]")
+				//没有坑可以用了
+				done <- true
+			}
+		}
+		//defer wg.Done()
+
+	}()
+	//最后一次检测时间在8小时以前记录
+	for p := 0; p < 10; p++ {
+		jobs <- p
 	}
-	ret := strings.Join(ch_arr, "")
-	if reverse {
-		return Reverse(ret)
-	}
-	return ret
-}
-//当前字符+88,变成对应位数的16进制
-func ToHex(ch int, width int) string {
-	return fmt.Sprintf("%0" + strconv.Itoa(width) + "x", ch)
+	close(jobs)
+	<-done
+	//wg.Wait()
+	fmt.Println("End checking proxys count[", "EEEEEEEEE", "]")
+	//	fmt.Println("sent all jobs")
+	//We await the worker using the synchronization approach we saw earlier.
+
+
 }
